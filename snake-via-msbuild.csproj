@@ -1,0 +1,59 @@
+﻿<Project Sdk="Microsoft.Build.NoTargets">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <MillisecondsDelay>300</MillisecondsDelay>
+  </PropertyGroup>
+
+  <UsingTask TaskName="Sleep" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <!-- Delay in Milliseconds -->
+      <Delay ParameterType="System.Int32" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+System.Threading.Thread.Sleep(this.Delay);
+]]>
+      </Code>
+    </Task>
+  </UsingTask>
+  
+  <UsingTask TaskName="Write" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <Text ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+System.Console.Write(this.Text);
+]]>
+      </Code>
+    </Task>
+  </UsingTask>
+  
+  <Target Name="PlaySnake" AfterTargets="Build">
+    <Message Text="A" Importance="High" />
+    <Sleep Delay="$(MillisecondsDelay)" />
+    <Message Text="P" Importance="High" />
+    <Sleep Delay="$(MillisecondsDelay)" />
+    <Message Text="R" Importance="High" />
+    <Sleep Delay="$(MillisecondsDelay)" />
+    <Message Text="I" Importance="High" />
+    <Sleep Delay="$(MillisecondsDelay)" />
+    <Message Text="L" Importance="High" />
+    <Sleep Delay="$(MillisecondsDelay)" />
+
+    <Write Text="  F"  />
+    <Sleep Delay="$(MillisecondsDelay)" />
+    <Write Text=" O" />
+    <Sleep Delay="$(MillisecondsDelay)" />
+    <Write Text=" O"  />
+    <Sleep Delay="$(MillisecondsDelay)" />
+    <Write Text=" L"  />
+    <Sleep Delay="$(MillisecondsDelay)" />
+    <Write Text=" S!"  />
+    <Sleep Delay="$(MillisecondsDelay)" />
+  </Target>
+
+</Project>
